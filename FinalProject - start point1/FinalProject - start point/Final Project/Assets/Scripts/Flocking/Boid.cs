@@ -9,6 +9,7 @@ public class Boid : MonoBehaviour {
     public Vector3 direction = Vector3.zero;
     public Vector3 forward = Vector3.zero;
     public int NeighborCount = 0;
+    public LineRenderer zapLine;
     Vector3 noise = Vector3.zero;
     LayerMask ground;
 	// Use this for initialization
