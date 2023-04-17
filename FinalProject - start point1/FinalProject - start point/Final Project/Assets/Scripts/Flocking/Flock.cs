@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Hosting;
 using UnityEngine;
+using static System.Net.Mime.MediaTypeNames;
 
 public class Flock : MonoBehaviour {
     public GameObject boidPrefab;
-    public string[] mask;
+    //Trying as int??
+        //public string[] mask;
+        public int mask;
     public int numberOfBoids = 20;
     public int numberOfObstacles = 10;
     public List<GameObject> boids;
@@ -21,7 +25,7 @@ public class Flock : MonoBehaviour {
     public GameObject target;
     public List<GameObject> deadBoids;
     public GameObject boom;
-    public bool player;
+    public bool IsPlayer;
     // Use this for initialization
     void Start () {
         target = gameObject;
@@ -54,8 +58,29 @@ public class Flock : MonoBehaviour {
                 // TODO - destroy the boid
             }
             deadBoids.Clear();
+
+            //  IF all boids are dead
             if (boids.Count == 0)
             {
+                //  IF this is player flock
+                if (IsPlayer == true)
+                {
+                    //  IF in editor
+                    if (UnityEngine.Application.isEditor)
+                    {
+                        UnityEditor.EditorApplication.isPlaying = false;
+                    }
+                    //  IF NOT in editor
+                    else
+                    {
+                        Application.Quit();
+                    }
+                }
+
+                else
+                {
+                    Destroy(boidPrefab);
+                }
                 // TODO - destroy this swarm leader
                 // unless it's the player, and if it's the player, stop the game.
             }
